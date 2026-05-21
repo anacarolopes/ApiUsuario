@@ -13,9 +13,6 @@ public class UsuarioServices : IUsuarioInterface
 {
     private readonly AppDbContext _context;
     private readonly ISenhaInterface _senhaInterface;
-    ResponseModel<UsuarioModel> response = new ResponseModel<UsuarioModel>();
-    ResponseModel<List<UsuarioModel>> responseList = new ResponseModel<List<UsuarioModel>>();
-
     public UsuarioServices(AppDbContext context, ISenhaInterface senhaInterface)
     {
         _context = context;
@@ -24,6 +21,8 @@ public class UsuarioServices : IUsuarioInterface
 
     public async Task<ResponseModel<UsuarioModel>> RegistrarUsuario(UsuarioCriacaoDto usuarioCriacaoDto)
     {
+        ResponseModel<UsuarioModel> response = new ResponseModel<UsuarioModel>();
+
         try
         {
             if (!VerificaSeExisteEmailUsuarioRepetidos(usuarioCriacaoDto))
@@ -61,6 +60,8 @@ public class UsuarioServices : IUsuarioInterface
 
     public async Task<ResponseModel<List<UsuarioModel>>> ListarUsuarios()
     {
+        ResponseModel<List<UsuarioModel>> responseList = new ResponseModel<List<UsuarioModel>>();
+
         try
         {
             var usuarios = await _context.Usuarios.ToListAsync();
@@ -78,6 +79,8 @@ public class UsuarioServices : IUsuarioInterface
 
     public async Task<ResponseModel<UsuarioModel>> BuscarUsuarioPorId(int id)
     {
+        ResponseModel<UsuarioModel> response = new ResponseModel<UsuarioModel>();
+        
         try
         {
             var usuario = await _context.Usuarios.FindAsync(id);
@@ -100,6 +103,8 @@ public class UsuarioServices : IUsuarioInterface
 
      public async Task<ResponseModel<UsuarioModel>> EditarUsuario(UsuarioEdicaoDto usuarioEdicaoDto)
     {
+        ResponseModel<UsuarioModel> response = new ResponseModel<UsuarioModel>();
+        
         try
         {
             var usuarioBanco = await _context.Usuarios.FindAsync(usuarioEdicaoDto.Id);
@@ -132,6 +137,8 @@ public class UsuarioServices : IUsuarioInterface
 
     public async Task<ResponseModel<UsuarioModel>> RemoverUsuario(int id)
     {
+        ResponseModel<UsuarioModel> response = new ResponseModel<UsuarioModel>();
+
         try
         {
            var usuario = await _context.Usuarios.FindAsync(id);
@@ -157,6 +164,8 @@ public class UsuarioServices : IUsuarioInterface
 
     public async Task<ResponseModel<UsuarioModel>> Login(UsuarioLoginDto usuarioLoginDto)
     {
+        ResponseModel<UsuarioModel> response = new ResponseModel<UsuarioModel>();
+        
         try
         {
             var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == usuarioLoginDto.Email);
